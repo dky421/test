@@ -12,8 +12,8 @@ static ssize_t led_write(struct file *file, const char __user *buf, size_t cnt, 
 
 static struct file_operations led_fops = {
   .owner = THIS_MODULE;
-  .open  = first_drv_open;
-  .write = first_drv_write;
+  .open  = led_open;
+  .write = led_write;
 };
 
 int led_init(void)
@@ -28,3 +28,8 @@ void led_exit(void)
   unregister_chrdev(123, "led");
   printk("led exit\n");
 }
+
+MODULE_INIT(led_init);
+MODULE_EXIT(led_exit);
+
+MODULE_LICENSE("GPL");
